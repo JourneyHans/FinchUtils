@@ -6,7 +6,7 @@ namespace HzFramework.Collections {
     public class PriorityQueue<T> : ICollection<T> where T : IComparable<T> {
 
         private readonly LinkedList<T> _list = new();
-        public T First => _list.First.Value;
+        public T FirstValue => _list.First.Value;
 
         public void Enqueue(T item) {
             if (item == null) {
@@ -25,7 +25,7 @@ namespace HzFramework.Collections {
         }
 
         public T Dequeue() {
-            if (_list.Count == 0) {
+            if (IsEmpty) {
                 return default;
             }
 
@@ -33,6 +33,8 @@ namespace HzFramework.Collections {
             _list.RemoveFirst();
             return current;
         }
+
+        public bool IsEmpty => Count == 0;
 
         #region ICollection<T>
 
