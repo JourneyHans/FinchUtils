@@ -1,20 +1,21 @@
 using System;
-using HzFramework.Singleton;
+using HzFramework.Common;
 
 namespace HzFramework.FSM.Stage {
-    public class StageManager : ASingleton<StageManager>, ISingleton {
+    public class StageManager : Singleton<StageManager>, ISingleton {
 
         private StateMachine<StageManager> _fsm;
 
-        public void OnCreate() {
+        protected override void OnCreate() {
             _fsm = StateMachine<StageManager>.Create(this);
         }
 
-        public void OnUpdate() {
-            _fsm.OnLogicUpdate();
-        }
+        // public void OnUpdate() {
+        //     _fsm.OnLogicUpdate();
+        // }
 
-        public void OnDestroy() {
+        protected override void OnDestroy() {
+            base.OnDestroy();
             _fsm.Stop();
         }
 

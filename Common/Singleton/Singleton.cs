@@ -1,7 +1,7 @@
 using System;
 
-namespace HzFramework.Singleton {
-    public abstract class ASingleton<T> where T : class, ISingleton {
+namespace HzFramework.Common {
+    public abstract class Singleton<T> : ISingleton where T : class {
         private static T _instance;
 
         public static T Instance {
@@ -14,16 +14,21 @@ namespace HzFramework.Singleton {
             }
         }
 
-        protected ASingleton() {
+        void ISingleton.Create() {
             if (_instance != null) {
                 throw new Exception($"{typeof(T)} has been created");
             }
 
             _instance = this as T;
+            OnCreate();
         }
 
-        protected void DestroyInstance() {
+        void ISingleton.Destroy() {
+            OnDestroy();
             _instance = null;
         }
+
+        protected virtual void OnCreate() { }
+        protected virtual void OnDestroy() { }
     }
 }

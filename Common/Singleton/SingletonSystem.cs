@@ -1,8 +1,7 @@
 using System;
 using HzFramework.Collections;
-using UnityEngine;
 
-namespace HzFramework.Singleton {
+namespace HzFramework.Common {
     public static class SingletonSystem {
         private class Wrapper : IComparable<Wrapper> {
             public ISingleton Singleton { get; }
@@ -19,8 +18,6 @@ namespace HzFramework.Singleton {
         }
 
         private static bool _isInitialized;
-        private static GameObject _driver;
-        private static MonoBehaviour _behaviour;
 
         private static readonly PriorityQueue<Wrapper> Wrappers = new();
 
@@ -33,9 +30,6 @@ namespace HzFramework.Singleton {
             }
 
             _isInitialized = true;
-            _driver = new GameObject($"@{nameof(SingletonSystem)}");
-            _behaviour = _driver.AddComponent<SingletonDriver>();
-            UnityEngine.Object.DontDestroyOnLoad(_driver);
         }
 
         /// <summary>
@@ -48,15 +42,6 @@ namespace HzFramework.Singleton {
 
             DestroyAll();
             _isInitialized = false;
-            if (_driver != null) {
-                UnityEngine.Object.Destroy(_driver);
-            }
-        }
-        
-        internal static void Update() {
-            foreach (Wrapper wrapper in Wrappers) {
-                wrapper.Singleton.OnUpdate();
-            }
         }
 
         internal static bool Contains<T>() where T : class, ISingleton {
@@ -76,7 +61,7 @@ namespace HzFramework.Singleton {
 
             T singleton = Activator.CreateInstance<T>();
             Wrapper wrapper = new(singleton, priority);
-            singleton.OnCreate();
+            singleton.Create();
             Wrappers.Enqueue(wrapper);
             return singleton;
         }
@@ -84,7 +69,7 @@ namespace HzFramework.Singleton {
         public static bool DestroySingleton<T>() where T : class, ISingleton {
             foreach (Wrapper wrapper in Wrappers) {
                 if (wrapper.Singleton.GetType() == typeof(T)) {
-                    wrapper.Singleton.OnDestroy();
+                    wrapper.Singleton.Destroy();
                     Wrappers.Remove(wrapper);
                     return true;
                 }
@@ -95,7 +80,7 @@ namespace HzFramework.Singleton {
 
         private static void DestroyAll() {
             foreach (Wrapper wrapper in Wrappers) {
-                wrapper.Singleton.OnDestroy();
+                wrapper.Singleton.Destroy();
             }
 
             Wrappers.Clear();
