@@ -26,10 +26,11 @@ namespace HzFramework.MVC {
 
         public LayerOrder LayerOrder { get; private set; }
 
-        public bool IsActive { get; private set; }
-        public bool IsDestroyed { get; private set; }
+        public abstract void Init();
 
-
+        public void Show(object[] showParams) {
+            _showParams = showParams;
+        }
 
         public int CompareTo(UIBase other) {
             return LayerOrder.CompareTo(other.LayerOrder);
