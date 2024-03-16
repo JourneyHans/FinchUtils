@@ -29,5 +29,18 @@ namespace HzFramework.MVC {
 
             return null;
         }
+
+        public static void Close<T>() where T : UIBase {
+            T ui = FindUI<T>();
+            if (ui == null) {
+                // 已经关闭
+                return;
+            }
+
+            // 从数据结构中移除
+            AllUIs.Remove(ui);
+
+            ui.Close();
+        }
     }
 }

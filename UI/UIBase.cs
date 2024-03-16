@@ -32,8 +32,18 @@ namespace HzFramework.MVC {
             _showParams = showParams;
         }
 
+        public void Close() {
+            _showParams = null;
+            OnClose();
+        }
+
         public int CompareTo(UIBase other) {
             return LayerOrder.CompareTo(other.LayerOrder);
+        }
+
+
+        protected virtual void OnClose() {
+
         }
     }
 }
