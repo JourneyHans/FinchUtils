@@ -10,6 +10,7 @@ using System;
 
 namespace HzFramework.Utils {
     // 特性
+    [AttributeUsage(AttributeTargets.Field)]
     public class DescriptionAttribute : Attribute {
         public string Description;
 
