@@ -2,7 +2,7 @@ using System;
 using HzFramework.Common;
 
 namespace HzFramework.FSM.Stage {
-    public class StageManager : Singleton<StageManager>, ISingleton {
+    public class StageManager : Singleton<StageManager> {
 
         private StateMachine<StageManager> _fsm;
 
