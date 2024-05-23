@@ -4,15 +4,13 @@ using HzFramework.Common;
 namespace HzFramework.FSM.Stage {
     public class StageManager : Singleton<StageManager> {
 
+        public string CurrentStageName => HasCreated && _fsm.CurrentState != null ? _fsm.CurrentState.Name : "None";
+
         private StateMachine<StageManager> _fsm;
 
         protected override void OnCreate() {
             _fsm = StateMachine<StageManager>.Create(this);
         }
-
-        // public void OnUpdate() {
-        //     _fsm.OnLogicUpdate();
-        // }
 
         protected override void OnDestroy() {
             base.OnDestroy();

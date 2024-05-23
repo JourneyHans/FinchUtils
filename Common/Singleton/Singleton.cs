@@ -3,7 +3,6 @@ using System;
 namespace HzFramework.Common {
     public abstract class Singleton<T> : ISingleton where T : class {
         private static T _instance;
-
         public static T Instance {
             get {
                 if (_instance == null) {
@@ -13,6 +12,8 @@ namespace HzFramework.Common {
                 return _instance;
             }
         }
+
+        public static bool HasCreated => _instance != null;
 
         void ISingleton.Create() {
             if (_instance != null) {

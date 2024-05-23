@@ -1,6 +1,6 @@
 using HzFramework.Common;
 
-namespace HzFramework.Logger {
+namespace HzFramework.Debugger {
     public interface ILogger {
         void Log(string message, params object[] args);
         void LogT(string tag, string message, params object[] args);
