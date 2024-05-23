@@ -2,20 +2,30 @@ using System;
 
 namespace HzFramework.Common {
     public abstract class Singleton<T> : ISingleton where T : class {
-        public static T Instance { get; private set; }
+        private static T _instance;
+
+        public static T Instance {
+            get {
+                if (_instance == null) {
+                    throw new Exception($"{typeof(T)} not found, need created by SingletonSystem manually");
+                }
+
+                return _instance;
+            }
+        }
 
         void ISingleton.Create() {
-            if (Instance != null) {
+            if (_instance != null) {
                 throw new Exception($"{typeof(T)} has been created");
             }
 
-            Instance = this as T;
+            _instance = this as T;
             OnCreate();
         }
 
         void ISingleton.Destroy() {
             OnDestroy();
-            Instance = null;
+            _instance = null;
         }
 
         protected virtual void OnCreate() { }
