@@ -174,5 +174,13 @@ namespace HzFramework.Common {
                 }
             }
         }
+
+        public static DirectoryInfo DeleteAndCreate(string directoryPath) {
+            if (Directory.Exists(directoryPath)) {
+                Directory.Delete(directoryPath, true);
+            }
+
+            return Directory.CreateDirectory(directoryPath);
+        }
     }
 }
