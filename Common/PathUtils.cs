@@ -182,5 +182,21 @@ namespace HzFramework.Common {
 
             return Directory.CreateDirectory(directoryPath);
         }
+
+        /// <summary>
+        /// 文件夹拷贝，只考虑了第一层，后续有需求再扩展递归
+        /// 拷贝方式，会先确认目标文件夹被清空，然后再拷贝
+        /// </summary>
+        /// <param name="originDir"></param>
+        /// <param name="destinationDir"></param>
+        public static void CopyDirectory(string originDir, string destinationDir) {
+            DeleteAndCreate(destinationDir);
+
+            string[] originFiles = Directory.GetFiles(originDir);
+            foreach (string originFile in originFiles) {
+                string destinationFile = Path.Combine(destinationDir, Path.GetFileName(originFile));
+                File.Copy(originFile, destinationFile, true);
+            }
+        }
     }
 }
