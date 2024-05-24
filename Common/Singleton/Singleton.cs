@@ -3,7 +3,7 @@ using System;
 namespace HzFramework.Common {
     public abstract class Singleton<T> : ISingleton where T : class {
         private static T _instance;
-        public static T Instance {
+        public static T Ins {
             get {
                 if (_instance == null) {
                     throw new Exception($"{typeof(T)} not found, need created by SingletonSystem manually");

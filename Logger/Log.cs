@@ -9,7 +9,7 @@ namespace HzFramework.Debugger {
         void Assert(bool condition, string message);
     }
 
-    public class Logger : Singleton<Logger> {
+    public class Log : Singleton<Log> {
         private static ILogger _logger;
 
         public void RegisterLogger(ILogger logger) {
@@ -22,7 +22,7 @@ namespace HzFramework.Debugger {
 
         #region ILogger
 
-        public void Log(string message, params object[] args) {
+        public void Debug(string message, params object[] args) {
             _logger.Log(message, args);
         }
 

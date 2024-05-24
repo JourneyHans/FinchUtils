@@ -159,12 +159,11 @@ namespace HzFramework.Common {
             DirectoryInfo[] dirs = dir.GetDirectories();
 
             // If the destination directory doesn't exist, create it.
-            if (clearDesDir) {
-                DeleteAndCreate(destDirName);
+            if (clearDesDir && Directory.Exists(destDirName)) {
+                Directory.Delete(destDirName, true);
             }
-            else {
-                Directory.CreateDirectory(destDirName);
-            }
+
+            Directory.CreateDirectory(destDirName);
 
             // Get the files in the directory and copy them to the new location.
             FileInfo[] files = dir.GetFiles();
@@ -180,14 +179,6 @@ namespace HzFramework.Common {
                     SafeCopyDir(subDir.FullName, tempPath, true, overwrite);
                 }
             }
-        }
-
-        public static DirectoryInfo DeleteAndCreate(string directoryPath) {
-            if (Directory.Exists(directoryPath)) {
-                Directory.Delete(directoryPath, true);
-            }
-
-            return Directory.CreateDirectory(directoryPath);
         }
     }
 }
