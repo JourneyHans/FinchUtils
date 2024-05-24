@@ -146,7 +146,9 @@ namespace HzFramework.Common {
             }
         }
 
-        public static void SafeCopyDir(string sourceDirName, string destDirName, bool copySubDirs, bool overwrite) {
+        public static void SafeCopyDir(string sourceDirName, string destDirName, bool clearDesDir = true,
+            bool copySubDirs = true, bool overwrite = true) {
+
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
 
             if (!dir.Exists) {
@@ -156,8 +158,13 @@ namespace HzFramework.Common {
 
             DirectoryInfo[] dirs = dir.GetDirectories();
 
-            // If the destination directory doesn't exist, create it.       
-            Directory.CreateDirectory(destDirName);
+            // If the destination directory doesn't exist, create it.
+            if (clearDesDir) {
+                DeleteAndCreate(destDirName);
+            }
+            else {
+                Directory.CreateDirectory(destDirName);
+            }
 
             // Get the files in the directory and copy them to the new location.
             FileInfo[] files = dir.GetFiles();
@@ -168,9 +175,9 @@ namespace HzFramework.Common {
 
             // If copying subdirectories, copy them and their contents to new location.
             if (copySubDirs) {
-                foreach (DirectoryInfo subdir in dirs) {
-                    string tempPath = Path.Combine(destDirName, subdir.Name);
-                    SafeCopyDir(subdir.FullName, tempPath, copySubDirs, overwrite);
+                foreach (DirectoryInfo subDir in dirs) {
+                    string tempPath = Path.Combine(destDirName, subDir.Name);
+                    SafeCopyDir(subDir.FullName, tempPath, true, overwrite);
                 }
             }
         }
@@ -181,22 +188,6 @@ namespace HzFramework.Common {
             }
 
             return Directory.CreateDirectory(directoryPath);
-        }
-
-        /// <summary>
-        /// 文件夹拷贝，只考虑了第一层，后续有需求再扩展递归
-        /// 拷贝方式，会先确认目标文件夹被清空，然后再拷贝
-        /// </summary>
-        /// <param name="originDir"></param>
-        /// <param name="destinationDir"></param>
-        public static void CopyDirectory(string originDir, string destinationDir) {
-            DeleteAndCreate(destinationDir);
-
-            string[] originFiles = Directory.GetFiles(originDir);
-            foreach (string originFile in originFiles) {
-                string destinationFile = Path.Combine(destinationDir, Path.GetFileName(originFile));
-                File.Copy(originFile, destinationFile, true);
-            }
         }
     }
 }
