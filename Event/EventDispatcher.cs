@@ -1,12 +1,6 @@
-using System;
-
-namespace HzFramework.Event {
-    public interface IEventMessage {
-
-    }
-
-    public static class EventDispatcher {
-
+namespace FinchUtils.Event {
+    public static class EventDispatcher
+    {
         private static readonly EventInternal EventInternal = new();
 
         public static void RegEventListener(string eventType, Action handler) {
@@ -56,21 +50,5 @@ namespace HzFramework.Event {
         public static void TriggerEvent<T1, T2, T3>(string eventType, T1 arg1, T2 arg2, T3 arg3) {
             EventInternal.TriggerEvent(eventType, arg1, arg2, arg3);
         }
-
-        #region 参数过多使用包装的方式
-
-        public static void RegEventListener<TEventArgs>(Action<TEventArgs> action) where TEventArgs : IEventMessage {
-            RegEventListener(typeof(TEventArgs).FullName, action);
-        }
-
-        public static void UnRegEventListener<TEventArgs>(Action<TEventArgs> action) where TEventArgs : IEventMessage {
-            UnRegEventListener(typeof(TEventArgs).FullName, action);
-        }
-
-        public static void TriggerEvent<TEventArgs>(TEventArgs args) where TEventArgs : IEventMessage {
-            TriggerEvent(typeof(TEventArgs).FullName, args);
-        }
-
-        #endregion
     }
 }

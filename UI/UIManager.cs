@@ -1,7 +1,7 @@
 using System;
-using HzFramework.Collections;
+using FinchUtils.Collections;
 
-namespace HzFramework.MVC {
+namespace FinchUtils.MVC {
     public static class UIManager {
         private static readonly PriorityQueue<UIBase> AllUIs = new();
 

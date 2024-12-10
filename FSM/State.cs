@@ -1,4 +1,4 @@
-namespace HzFramework.FSM {
+namespace FinchUtils.FSM {
     public abstract class State<T> where T : class {
         public IStateMachine<T> Machine { get; private set; }
         public T Owner { get; private set; }

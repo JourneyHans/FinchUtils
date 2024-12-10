@@ -1,7 +1,6 @@
-using System;
-using HzFramework.Collections;
+using FinchUtils.Collections;
 
-namespace HzFramework.Common {
+namespace FinchUtils.Common.Singleton {
     public static class SingletonSystem {
         private class Wrapper : IComparable<Wrapper> {
             public ISingleton Singleton { get; }

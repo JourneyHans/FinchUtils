@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 
-namespace HzFramework.Utils {
+namespace FinchUtils.Utils {
     // 特性
     [AttributeUsage(AttributeTargets.Field)]
     public class DescriptionAttribute : Attribute {

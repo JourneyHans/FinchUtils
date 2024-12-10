@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
+using FinchUtils.Debugger;
 
-namespace HzFramework.Event {
+namespace FinchUtils.Event {
     internal class EventInternal {
         private readonly Dictionary<string, Delegate> _eventRouter = new();
 
         private void OnListenerAdding(string eventType, Delegate listenerAdded) {
-            if (!_eventRouter.ContainsKey(eventType)) {
-                _eventRouter.Add(eventType, null);
-            }
+            _eventRouter.TryAdd(eventType, null);
 
             Delegate eventDelegate = _eventRouter[eventType];
             if (eventDelegate != null && eventDelegate.GetType() != listenerAdded.GetType()) {
@@ -17,10 +14,10 @@ namespace HzFramework.Event {
         }
 
         private bool OnListenerRemoving(string eventType, Delegate listenerRemoved) {
-            if (!_eventRouter.ContainsKey(eventType)) {
+            if (!_eventRouter.TryGetValue(eventType, out Delegate eventDelegate)) {
                 return false;
             }
-            Delegate eventDelegate = _eventRouter[eventType];
+
             if (eventDelegate != null && eventDelegate.GetType() != listenerRemoved.GetType()) {
                 throw new Exception($"Remove listener {eventType} failed, Current type is {eventDelegate.GetType()}, adding type is {listenerRemoved.GetType()}.");
             }
@@ -100,8 +97,9 @@ namespace HzFramework.Event {
                 try {
                     action();
                 }
-                catch (Exception ex) {
-                    UnityEngine.Debug.LogError(ex.ToString());
+                catch (Exception ex)
+                {
+                    Log.Instance?.Error(ex.ToString());
                 }
             }
         }
@@ -120,7 +118,7 @@ namespace HzFramework.Event {
                     action(arg1);
                 }
                 catch (Exception ex) {
-                    UnityEngine.Debug.LogError(ex.ToString());
+                    Log.Instance?.Error(ex.ToString());
                 }
             }
         }
@@ -139,7 +137,7 @@ namespace HzFramework.Event {
                     action(arg1, arg2);
                 }
                 catch (Exception ex) {
-                    UnityEngine.Debug.LogError(ex.ToString());
+                    Log.Instance?.Error(ex.ToString());
                 }
             }
         }
@@ -158,7 +156,7 @@ namespace HzFramework.Event {
                     action(arg1, arg2, arg3);
                 }
                 catch (Exception ex) {
-                    UnityEngine.Debug.LogError(ex.ToString());
+                    Log.Instance?.Error(ex.ToString());
                 }
             }
         }

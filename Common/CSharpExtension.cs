@@ -1,12 +1,19 @@
-using System.Collections.Generic;
+using System.Collections;
 
-namespace HzFramework.Common {
-    public static class CSharpExtension {
-        public static bool IsNullOrEmpty<T>(this ICollection<T> collection) {
+namespace FinchUtils.Common
+{
+    public static class CollectionsExtension
+    {
+        public static bool IsNullOrEmpty<T>(this ICollection? collection)
+        {
             return collection == null || collection.Count == 0;
         }
+    }
 
-        public static bool IsNullOrEmpty(this string str) {
+    public static class StringExtension
+    {
+        public static bool IsNullOrEmpty(this string str)
+        {
             return string.IsNullOrEmpty(str);
         }
     }

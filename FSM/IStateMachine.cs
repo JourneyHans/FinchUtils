@@ -1,4 +1,4 @@
-namespace HzFramework.FSM {
+namespace FinchUtils.FSM {
     public interface IStateMachine<T> where T : class {
         T Owner { get; }
         void Register(State<T> state);

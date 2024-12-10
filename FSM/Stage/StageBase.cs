@@ -1,7 +1,7 @@
-namespace HzFramework.FSM.Stage {
+namespace FinchUtils.FSM.Stage {
     public class StageBase : State<StageManager> {
         public void ChangeStage<T>() where T : StageBase {
-            StageManager.Ins.ChangeStage<T>();
+            StageManager.Instance.ChangeStage<T>();
         }
     }
 }

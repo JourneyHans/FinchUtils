@@ -1,6 +1,6 @@
-using HzFramework.Common;
+using FinchUtils.Common.Singleton;
 
-namespace HzFramework.Debugger {
+namespace FinchUtils.Debugger {
     public interface ILogger {
         void Log(string message, params object[] args);
         void LogT(string tag, string message, params object[] args);
@@ -9,7 +9,7 @@ namespace HzFramework.Debugger {
         void Assert(bool condition, string message);
     }
 
-    public class Log : Singleton<Log> {
+    public class Log : ManagedSingleton<Log> {
         private static ILogger _logger;
 
         public void RegisterLogger(ILogger logger) {
@@ -32,6 +32,11 @@ namespace HzFramework.Debugger {
 
         public void Warning(string log, params object[] args) {
             _logger.Warning(log, args);
+        }
+
+        public void Error(string log, params object[] args)
+        {
+            _logger.Error(log, args);
         }
 
         public void Assert(bool condition, string message) {

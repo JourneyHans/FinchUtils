@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HzFramework.FSM {
+namespace FinchUtils.FSM {
     public sealed class StateMachine<T> : IStateMachine<T> where T : class {
         public T Owner { get; }
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace HzFramework.MVC {
+namespace FinchUtils.MVC {
 
     public enum Group {
         Bottom = 1,

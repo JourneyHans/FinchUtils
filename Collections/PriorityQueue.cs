@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 
-namespace HzFramework.Collections {
+namespace FinchUtils.Collections {
     public class PriorityQueue<T> : ICollection<T> where T : IComparable<T> {
 
         private readonly LinkedList<T> _list = new();

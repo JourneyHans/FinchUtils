@@ -1,8 +1,7 @@
-using System;
-using HzFramework.Common;
+using FinchUtils.Common.Singleton;
 
-namespace HzFramework.FSM.Stage {
-    public class StageManager : Singleton<StageManager> {
+namespace FinchUtils.FSM.Stage {
+    public class StageManager : ManagedSingleton<StageManager> {
 
         public string CurrentStageName => HasCreated && _fsm.CurrentState != null ? _fsm.CurrentState.Name : "None";
 
