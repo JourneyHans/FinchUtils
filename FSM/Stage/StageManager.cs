@@ -10,7 +10,7 @@ public class StageManager : ManagedSingleton<StageManager> {
     private StateMachine<StageManager> _fsm;
 
     protected override void OnCreate() {
-        _fsm = StateMachine<StageManager>.Create(this);
+        _fsm = new StateMachine<StageManager>(this);
     }
 
     protected override void OnDestroy() {

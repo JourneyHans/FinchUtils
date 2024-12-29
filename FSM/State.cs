@@ -22,4 +22,8 @@ public abstract class State<T> where T : class {
     public virtual void OnExit() {
         IsExiting = true;
     }
+
+    protected virtual void ChangeState<TState>() where TState : State<T> {
+        Machine.ChangeState<TState>();
+    }
 }

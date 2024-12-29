@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinchUtils.FSM;
 
-public sealed class StateMachine<T> : IStateMachine<T> where T : class {
+public class StateMachine<T> : IStateMachine<T> where T : class {
     public T Owner { get; }
 
     private readonly Dictionary<Type, State<T>> _states;
@@ -14,20 +14,9 @@ public sealed class StateMachine<T> : IStateMachine<T> where T : class {
 
     public bool IsStarted => CurrentState != null;
 
-    // 防止外部new
-    private StateMachine(T owner) {
+    public StateMachine(T owner) {
         Owner = owner;
         _states = new Dictionary<Type, State<T>>();
-    }
-
-    // 创建状态机
-    public static StateMachine<T> Create(T owner) {
-        if (owner == null) {
-            throw new Exception("owner is null");
-        }
-
-        StateMachine<T> fsm = new(owner);
-        return fsm;
     }
 
     public void Register(State<T> state) {
