@@ -109,7 +109,7 @@ internal class EventInternal {
                 action();
             }
             catch (Exception ex) {
-                Log.Instance?.Error(ex.ToString());
+                Logger.Instance?.Error(ex.ToString());
             }
         }
     }
@@ -129,7 +129,7 @@ internal class EventInternal {
                 action(arg1);
             }
             catch (Exception ex) {
-                Log.Instance?.Error(ex.ToString());
+                Logger.Instance?.Error(ex.ToString());
             }
         }
     }
@@ -149,7 +149,7 @@ internal class EventInternal {
                 action(arg1, arg2);
             }
             catch (Exception ex) {
-                Log.Instance?.Error(ex.ToString());
+                Logger.Instance?.Error(ex.ToString());
             }
         }
     }
@@ -169,7 +169,7 @@ internal class EventInternal {
                 action(arg1, arg2, arg3);
             }
             catch (Exception ex) {
-                Log.Instance?.Error(ex.ToString());
+                Logger.Instance?.Error(ex.ToString());
             }
         }
     }

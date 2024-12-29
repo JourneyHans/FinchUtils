@@ -41,7 +41,7 @@ public class ComponentManager : IDisposable {
     /// <param name="component">添加的组件</param>
     public void AddComponent(IComponent component) {
         if (NameToComponent.ContainsKey(component.Name)) {
-            Log.Instance?.Error($"重复添加组件 {component.Name}");
+            Logger.Instance?.Error($"重复添加组件 {component.Name}");
             return;
         }
 

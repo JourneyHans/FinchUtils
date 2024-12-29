@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FinchUtils.Collections;
 
 namespace FinchUtils.Common.Singleton;
@@ -18,41 +19,10 @@ public static class SingletonSystem {
         }
     }
 
-    private static bool _isInitialized;
-
     private static readonly PriorityQueue<Wrapper> Wrappers = new();
 
-    /// <summary>
-    /// 初始化单例系统
-    /// </summary>
-    public static void Initialize() {
-        if (_isInitialized) {
-            throw new Exception($"{nameof(SingletonSystem)} is initialized");
-        }
-
-        _isInitialized = true;
-    }
-
-    /// <summary>
-    /// 销毁单例系统
-    /// </summary>
-    public static void Destroy() {
-        if (!_isInitialized) {
-            return;
-        }
-
-        DestroyAll();
-        _isInitialized = false;
-    }
-
-    internal static bool Contains<T>() where T : class, ISingleton {
-        foreach (Wrapper wrapper in Wrappers) {
-            if (wrapper.Singleton.GetType() == typeof(T)) {
-                return true;
-            }
-        }
-
-        return false;
+    private static bool Contains<T>() where T : class, ISingleton {
+        return Wrappers.Any(wrapper => wrapper.Singleton.GetType() == typeof(T));
     }
 
     public static T CreateSingleton<T>(int priority = 0) where T : class, ISingleton {
@@ -79,7 +49,7 @@ public static class SingletonSystem {
         return false;
     }
 
-    private static void DestroyAll() {
+    public static void DestroyAll() {
         foreach (Wrapper wrapper in Wrappers) {
             wrapper.Singleton.Destroy();
         }
