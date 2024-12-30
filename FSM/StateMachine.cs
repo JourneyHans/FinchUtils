@@ -36,21 +36,16 @@ public class StateMachine<T> : IStateMachine<T> where T : class {
         if (!_states.TryGetValue(typeof(TState), out var state)) {
             throw new Exception($"Cannot find state: {typeof(TState)}");
         }
-
-        CurrentState = state;
-        CurrentState.OnEnter();
+        
+        ChangeState<TState>();
     }
 
-    public void ChangeState<TState>() where TState : State<T> {
-        if (CurrentState == null) {
-            throw new Exception("StateMachine did not start");
-        }
-
+    public virtual void ChangeState<TState>() where TState : State<T> {
         if (!_states.TryGetValue(typeof(TState), out var state)) {
             throw new Exception($"Cannot find state: {typeof(TState)}");
         }
 
-        CurrentState.OnExit();
+        CurrentState?.OnExit();
         PreState = CurrentState;
         CurrentState = state;
         CurrentState.OnEnter();
