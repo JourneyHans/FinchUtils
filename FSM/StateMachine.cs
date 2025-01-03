@@ -11,6 +11,8 @@ public class StateMachine<T> : IStateMachine<T> where T : class {
 
     public State<T> PreState { get; private set; }
     public State<T> CurrentState { get; private set; }
+    
+    public Action OnStateChanged;
 
     public bool IsStarted => CurrentState != null;
 
@@ -45,10 +47,16 @@ public class StateMachine<T> : IStateMachine<T> where T : class {
             throw new Exception($"Cannot find state: {typeof(TState)}");
         }
 
+        if (CurrentState == state) {
+            // same state
+            return;
+        }
+
         CurrentState?.OnExit();
         PreState = CurrentState;
         CurrentState = state;
         CurrentState.OnEnter();
+        OnStateChanged?.Invoke();
     }
 
     public void Stop(bool clearData = true) {
