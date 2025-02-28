@@ -11,7 +11,7 @@ public interface ILoggerHandler {
     void Assert(bool condition, string message);
 }
 
-public class Logger : ManagedSingleton<Logger> {
+public class Logger : NullableSingleton<Logger> {
     private static ILoggerHandler _loggerHandler;
 
     public void RegisterLogger(ILoggerHandler loggerHandler) {

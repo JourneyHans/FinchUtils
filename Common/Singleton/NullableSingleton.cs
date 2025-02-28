@@ -10,7 +10,7 @@ using System;
 
 namespace FinchUtils.Common.Singleton;
 
-public abstract class ManagedSingleton<T> : ISingleton where T : class {
+public abstract class NullableSingleton<T> : ISingleton where T : class {
     public static T? Instance { get; private set; }
 
     public static bool HasCreated => Instance != null;
@@ -29,6 +29,9 @@ public abstract class ManagedSingleton<T> : ISingleton where T : class {
         Instance = null;
     }
 
-    protected virtual void OnCreate() { }
-    protected virtual void OnDestroy() { }
+    protected virtual void OnCreate() {
+    }
+
+    protected virtual void OnDestroy() {
+    }
 }

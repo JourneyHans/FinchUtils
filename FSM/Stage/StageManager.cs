@@ -3,7 +3,7 @@ using FinchUtils.Common.Singleton;
 
 namespace FinchUtils.FSM.Stage;
 
-public class StageManager : ManagedSingleton<StageManager> {
+public class StageManager : NullableSingleton<StageManager> {
 
     public string CurrentStageName => HasCreated && _fsm.CurrentState != null ? _fsm.CurrentState.Name : "None";
 
