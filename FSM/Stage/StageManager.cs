@@ -13,9 +13,16 @@ namespace FinchUtils.FSM.Stage
             _fsm = new StateMachine<StageManager>(this);
         }
 
+        public void Tick() {
+            _fsm?.OnLogicUpdate();
+        }
+
         protected override void OnDestroy() {
+            if (_fsm != null && _fsm.IsStarted) {
+                _fsm.Stop();
+            }
+
             base.OnDestroy();
-            _fsm.Stop();
         }
 
         public void Register<T>() where T : StageBase {
