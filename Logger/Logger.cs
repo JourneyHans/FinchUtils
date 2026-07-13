@@ -1,5 +1,6 @@
 using System;
 using FinchUtils.Common.Singleton;
+using FinchUtils.Utils;
 
 namespace FinchUtils.Debugger {
     public interface ILoggerHandler {
@@ -33,6 +34,10 @@ namespace FinchUtils.Debugger {
 
         public void LogT(string tag, string message, params object[] args) {
             _loggerHandler.LogT(tag, message, args);
+        }
+
+        public void LogT<TEnum>(TEnum tag, string message, params object[] args) where TEnum : struct, Enum {
+            _loggerHandler.LogT(tag.GetDescription(), message, args);
         }
 
         public void Warning(string log, params object[] args) {
