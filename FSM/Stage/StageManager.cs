@@ -1,9 +1,8 @@
 using System;
 using FinchUtils.Common.Singleton;
 
-namespace FinchUtils.FSM.Stage
-{
-    public class StageManager : NullableSingleton<StageManager> {
+namespace FinchUtils.FSM.Stage {
+    public class StageManager : Singleton<StageManager> {
 
         public string CurrentStageName => HasCreated && _fsm.CurrentState != null ? _fsm.CurrentState.Name : "None";
 
