@@ -1,8 +1,7 @@
 using System;
 using FinchUtils.Common.Singleton;
 
-namespace FinchUtils.Debugger
-{
+namespace FinchUtils.Debugger {
     public interface ILoggerHandler {
         void Log(string message, params object[] args);
         void LogT(string tag, string message, params object[] args);
