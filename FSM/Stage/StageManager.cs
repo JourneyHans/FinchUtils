@@ -58,13 +58,8 @@ namespace FinchUtils.FSM.Stage {
             _fsm.RemoveData<TData>();
         }
 
-        public TData GetData<TData>(bool disposable = true) {
-            TData data = _fsm.GetData<TData>();
-            if (disposable) {
-                _fsm.RemoveData<TData>();
-            }
-
-            return data;
+        public TData GetData<TData>(bool removeImmediately = true) {
+            return _fsm.GetData<TData>(removeImmediately);
         }
     }
 }

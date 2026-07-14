@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FinchUtils.FSM
-{
+namespace FinchUtils.FSM {
     public class StateMachine<T> : IStateMachine<T> where T : class {
         public T Owner { get; }
 
@@ -11,7 +10,7 @@ namespace FinchUtils.FSM
 
         public State<T> PreState { get; private set; }
         public State<T> CurrentState { get; private set; }
-    
+
         public Action OnStateChanged;
 
         public bool IsStarted => CurrentState != null;
@@ -38,7 +37,7 @@ namespace FinchUtils.FSM
             if (!_states.TryGetValue(typeof(TState), out var state)) {
                 throw new Exception($"Cannot find state: {typeof(TState)}");
             }
-        
+
             ChangeState<TState>();
         }
 
@@ -86,7 +85,7 @@ namespace FinchUtils.FSM
             _keyToData[key] = data;
         }
 
-        public TData GetData<TData>() {
+        public TData GetData<TData>(bool removeImmediately = true) {
             string key = typeof(TData).FullName;
 
             if (string.IsNullOrEmpty(key)) {
@@ -98,6 +97,9 @@ namespace FinchUtils.FSM
             }
 
             if (_keyToData.TryGetValue(key, out object data)) {
+                if (removeImmediately) {
+                    _keyToData.Remove(key);
+                }
                 return (TData)data;
             }
 

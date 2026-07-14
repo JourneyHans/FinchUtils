@@ -1,5 +1,4 @@
-namespace FinchUtils.FSM
-{
+namespace FinchUtils.FSM {
     public interface IStateMachine<T> where T : class {
         T Owner { get; }
         void Register(State<T> state);
@@ -8,7 +7,7 @@ namespace FinchUtils.FSM
         void Stop(bool clearData = true);
 
         void SetData<TData>(object data);
-        TData GetData<TData>();
+        TData GetData<TData>(bool removeImmediately = true);
         bool RemoveData<TData>();
         void ClearData();
     }
