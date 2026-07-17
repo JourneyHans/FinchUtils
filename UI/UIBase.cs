@@ -1,7 +1,6 @@
 using System;
 
-namespace FinchUtils.MVC
-{
+namespace FinchUtils.MVC {
     public enum Group {
         Bottom = 1,
         Common = 2,
@@ -21,29 +20,10 @@ namespace FinchUtils.MVC
         }
     }
 
-    public abstract class UIBase : IComparable<UIBase> {
-        private object[] _showParams;
-
-        public LayerOrder LayerOrder { get; private set; }
-
-        public abstract void Init();
-
-        public void Show(object[] showParams) {
-            _showParams = showParams;
-        }
-
-        public void Close() {
-            _showParams = null;
-            OnClose();
-        }
-
-        public int CompareTo(UIBase other) {
-            return LayerOrder.CompareTo(other.LayerOrder);
-        }
-
-
-        protected virtual void OnClose() {
-
-        }
+    public interface IUIBase : IComparable<IUIBase> {
+        public LayerOrder LayerOrder { get; }
+        public void Show(object[] showParams);
+        public void Init();
+        public void Close();
     }
 }

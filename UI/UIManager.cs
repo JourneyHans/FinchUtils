@@ -1,18 +1,17 @@
 using System;
-using FinchUtils.Collections;
+using System.Collections.Generic;
 
-namespace FinchUtils.MVC
-{
+namespace FinchUtils.MVC {
     public static class UIManager {
-        private static readonly PriorityQueue<UIBase> AllUIs = new();
+        private readonly static Dictionary<string, IUIBase> _uiDic = new();
 
-        public static T Show<T>(params object[] args) where T : UIBase {
+        public static T Show<T>(params object[] args) where T : IUIBase {
             T ui = FindUI<T>();
             if (ui == null) {
                 // 创建UI
                 ui = Activator.CreateInstance<T>();
                 ui.Init();
-                AllUIs.Add(ui);
+                _uiDic.Add(typeof(T).Name, ui);
             }
 
             // TODO: 已存在，重新显示（可能需要调整层级），如果不需要调整层级，就不调用Show了
@@ -21,17 +20,15 @@ namespace FinchUtils.MVC
             return ui;
         }
 
-        public static T FindUI<T>() where T : UIBase {
-            foreach (UIBase uiBase in AllUIs) {
-                if (uiBase is T ui) {
-                    return ui;
-                }
+        public static T FindUI<T>() where T : IUIBase {
+            if (_uiDic.TryGetValue(typeof(T).Name, out var ui)) {
+                return (T)ui;
             }
 
-            return null;
+            return default;
         }
 
-        public static void Close<T>() where T : UIBase {
+        public static void Close<T>() where T : IUIBase {
             T ui = FindUI<T>();
             if (ui == null) {
                 // 已经关闭
@@ -39,7 +36,7 @@ namespace FinchUtils.MVC
             }
 
             // 从数据结构中移除
-            AllUIs.Remove(ui);
+            _uiDic.Remove(typeof(T).Name);
 
             ui.Close();
         }
